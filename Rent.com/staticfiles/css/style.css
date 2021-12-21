@@ -1,0 +1,366 @@
+header{
+    width: 100%;
+    max-height: 500px;
+}
+.float-right{
+    width: 50%;
+    height: 100%;
+}
+.float-right img{
+    width: 100%;
+    height: 100%;
+}
+.float-left{  
+    width: 50%;
+    padding: 70px;
+    height: 100%;
+    }
+.float-left h3{
+    font-size: 45px;
+}
+.float-left p{
+    font-size: 12px;
+}
+#about{
+    width: 85%;
+    margin: 0 auto;
+    max-height: 2000px;
+    
+}
+@media (max-width:1048px){
+    .header{
+        height:200px ;
+    }
+    .float-left{
+        width: 100%;
+        padding: 80px 50px 0;
+    }
+    .float-right{
+        display: none;
+        height: 0;
+    }
+    #about{
+        padding-top: 50px;
+    }
+
+}
+.head{
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+    
+}
+.section{
+    background-color: #f0f3f3;
+    width: 100%;
+    height: 100vh;
+}
+.contain{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.content-left{
+    width: 100%;
+    min-height: 200px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    display: flex;
+    background-color: #fff;
+    margin: 20px;
+    transition: 0.5s;
+
+}
+.content-left:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: translate(-10px);
+
+}
+.image{
+    width: 40%;
+    height: 100%;
+}
+.image img{
+    width: 100%;
+    height: 100%;
+}
+.texts{
+    width: 60%;
+    height: 100%;
+}
+.texts div{
+    display: flex;
+    justify-content: space-between;
+}
+.texts div p{
+    font-size: 18px;
+}
+.texts a{
+    text-decoration: none;
+}
+.texts h4{
+    margin-top: 20px;
+}
+.texts p{
+    float: right;
+}
+.container{
+    width: 65%;
+    margin: 0 auto;
+}
+.absjd{
+    display: flex;
+    justify-content: space-between;
+}
+
+.headers{
+    width: 100%;
+    height: 450px;
+    background-attachment: fixed;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.37);
+}
+.headers input, .headers button{
+    margin-top: 35px;
+}
+
+
+
+@media (max-width:1012px){
+    .content-left{
+        width: 100%;
+        display: block;
+    }
+    .image{
+        width: 100%;
+    }.texts{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        padding: 20px;
+    }
+    .absjd{
+        display: block;
+    }
+    .headers h3{
+            font-size:20px;
+        }
+    .headers h1{
+        font-size:30px;
+    }.headers input, .headers button{
+        margin: 5px;
+    }
+    .container{
+        width: 80%;
+    }
+    .contain1{
+        width: 0%;
+    }
+    .contain{
+        width: 90%;
+    }
+
+}
+@media (max-width:1012px) and (min-width:657px){
+    .absjd{
+        display: flex;
+    }
+}
+
+.corusel{
+    margin-top: 40px;
+    
+}.home{
+    margin: 9vh auto 9vh;
+    width: 60%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 40px;
+}
+.border{
+    transition: 0.5s;
+}
+.border:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: translate(-10px);
+
+}
+body{
+    margin-bottom: 100px;
+}
+.home h3{
+    width: 70%;
+}
+.home h5{
+    float: right;
+    margin-top: -30px;
+}
+.home h5 p{
+    font-size: 13px;
+}
+
+.text p{
+    font-size: 18px;
+}
+@media (max-width:1012px) {
+    .home{
+        width: 80%;
+        margin: 0 auto;
+    }
+    
+}
+@media (max-width:567px) {
+    .home{
+        width: 80%;
+        margin: 0 auto;
+    }
+    .text p{
+        font-size: 16px;
+    }
+    .home h5{
+        font-size: 25px;
+        display: block;
+        float: left;
+    }
+    .home h3{
+        font: 25px;
+        width: 100%;
+        display: block;
+    }
+}
+.col-8 p{
+    font-size: 20px;
+}
+.col-4{
+    display: flex;
+    align-items: flex-end;
+}
+.col-4 img{
+    width: 300px;
+    margin-left: -150px;
+}
+
+
+/* multislide */
+
+.multislide{
+    width: 90%;
+    margin:  0 auto;
+    max-height: 400px;
+}
+  #exampleSlider {
+    position: relative;
+  }
+  @media (max-width: 767px) {
+    #exampleSlider {
+      border-color: transparent;
+    }
+  }
+  #exampleSlider .MS-content {
+    margin: 15px 5%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  @media (max-width: 767px) {
+    #exampleSlider .MS-content {
+      margin: 0;
+    }
+  }
+  .item img{
+    width: 100%;
+  }
+  #exampleSlider .MS-content .item {
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    vertical-align: top;
+    border-right: none;
+    width: 15.5%;
+    margin: 8px;
+    border-radius: 7px;
+    transition: 0.5s;
+  }
+  #exampleSlider .MS-content .item:hover {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  @media (max-width: 1200px) {
+    #exampleSlider .MS-content .item {
+      width: 25%;
+    }
+  }
+  @media (max-width: 992px) {
+    #exampleSlider .MS-content .item {
+      width: 33.3333%;
+    }
+  }
+  @media (max-width: 767px) {
+    #exampleSlider .MS-content .item {
+      width: 50%;
+    }
+  }
+  #exampleSlider .MS-content .item p {
+    font-size: 15px;
+    line-height: 1;
+    vertical-align: middle;
+    margin: 0;
+    padding: 10px 0;
+  }
+  .MS-content{
+    padding: 20px;
+  }
+  #exampleSlider .MS-controls button {
+    position: absolute;
+    border: none;
+    background: white;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    padding: 7px 10px;
+    font-size: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @media (max-width: 767px) {
+    #exampleSlider .MS-controls button {
+      display: none;
+    }
+  }
+  #exampleSlider .MS-controls button:hover {
+    cursor: pointer;
+  }
+  #exampleSlider .MS-controls .MS-left {
+    left: 10px;
+  }
+  @media (max-width: 992px) {
+    #exampleSlider .MS-controls .MS-left {
+      left: -2px;
+    }
+  }
+  #exampleSlider .MS-controls .MS-right {
+    right: 10px;
+  }
+  @media (max-width: 992px) {
+    #exampleSlider .MS-controls .MS-right {
+      right: -2px;
+    }
+  }
+  p{
+    font-size: 14px;
+  }
+  .contact{
+      width: 80%;
+      min-height: 300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+  }
+  .contact-left{
+      width: 45%;
+  }
+  .contact-right{
+    width: 45%;
+}
+  #map {
+    height: 100%;
+}

@@ -1,0 +1,127 @@
+{% load static %}
+{% block content %}
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renting a house</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css'>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+    @media(max-width:900px){
+    header{
+        background-image: url("https://www.savol-javob.com/wp-content/uploads/2020/05/186_240113_east_10_resize.jpg");
+    }
+}
+</style>
+</head>
+
+<body class="section" style="padding: 0;">
+    <nav class="navbar navbar-expand-custom navbar-mainbg navbar-sticky" >
+        <a class="navbar-brand navbar-logo" href="/"><img src="{% static 'img/logo.png' %}" alt=""></a>
+        <button class="navbar-toggler btn" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item">
+                    <a class="nav-link " href="/"><i class="fas fa-home"></i></i>Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'uy:ijara' %}"><i class="far fa-calendar-alt"></i>Renting a house</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'uy:qoyish' %}"><i class="far fa-calendar-alt"></i>Renting out</a>
+                </li>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'uy:logoutacc' %}"><i class="fas fa-user-cog"></i>Logout</a>
+
+                    {% else %}
+                     <a class="nav-link" href="{% url 'uy:login' %}"><i class="fas fa-user-cog"></i>Login</a>
+                     {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <header class="headers" style="background-image: url('https://www.savol-javob.com/wp-content/uploads/2020/05/186_240113_east_10_resize.jpg'); ">
+        <h1 class="text-center text-white pt-5">Rented houses!</h1>
+        <h3 class="text-center text-white">Choose the house of your rent from our latest ads. </h3>
+        <div class="">
+            <form method="GET" class="container absjd" action="{% url 'uy:serch_homes' %}">
+                <input type="text " name="q" class="form-control mx-2 " placeholder="Region" aria-label="Username" aria-describedby="addon-wrapping">
+                <input type="text" name="p" class="form-control mx-2 " placeholder="District" aria-label="Username" aria-describedby="addon-wrapping">
+                <button class="btn btn-primary w-100 form-control mx-2 ">Search</button>
+            </form>
+        </div>
+    </header>
+    <section class="head">
+    <div class="contain1">
+        
+    </div>
+    <div class="contain">
+        {% if object_list %}  
+             
+                  {% for home in object_list %}
+                  <div class="content-left" style="padding:0;">
+                    <div class="image">
+                        <a href="{% url 'uy:home_detail' home.id %}"><img src="{{home.img_1.url}}" alt=""></a>
+                    </div>
+                    <div class="texts" style="margin:20px">
+                        <div>
+                            <p>{{home.region}}, {{home.district}}</p><p>$ {{home.cost}} per month / Negotiable</p>
+                        </div>
+                        <a href="{% url 'uy:home_detail' home.id %}"><h5>
+                            House for rent, {{home.number_of_rooms}} rooms.
+                        <h5></a>
+                        <h6>{{home.desc|truncatewords:10}}</h6>
+                        <style type="text/css">
+                            p{
+                                margin:0;
+                            }
+                        </style>
+                        <div style="float:right; display: flex; flex-wrap:wrap; flex-direction:column; width:60%;">
+                            
+                            <p>Name: {{home.user.name}}</p>
+                            <p>Phone: {{home.user.phone}}</p>
+                        </div><br><br><br>
+                        <div style="float: right;">
+                            <p>{{home.date}}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                  {% endfor %}
+
+              {% else %}
+                      <div class="row">
+              <div class="col-md-8">
+                <br>
+                <br>
+
+              <div class="alert alert-danger" role="alert">
+      <strong>Sorry!</strong> Serch results not found.
+    </div>
+    {% endif %}
+    </div>
+
+    
+
+</section>
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
+{% endblock content %}

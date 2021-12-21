@@ -1,0 +1,114 @@
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renting out</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css'>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+<body class="imgage">
+    <nav class="navbar navbar-expand-custom navbar-mainbg navbar-sticky" >
+        <a class="navbar-brand navbar-logo" href="/"><img  src="{% static 'img/logo.png' %}" alt=""></a>
+        <button class="navbar-toggler btn" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item">
+                    <a class="nav-link " href="/"><i class="fas fa-home"></i></i>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'uy:ijara' %}"><i class="far fa-calendar-alt"></i>Renting a house</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'uy:qoyish' %}"><i class="far fa-calendar-alt"></i>Renting out</a>
+                </li>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'uy:logoutacc' %}"><i class="fas fa-user-cog"></i>Logout</a>
+
+                    {% else %}
+                     <a class="nav-link" href="{% url 'uy:login' %}"><i class="fas fa-user-cog"></i>Login</a>
+                     {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <section style="width: 100%; padding-top: 20px; min-height: 500px;">
+        <h2 class="text-center">How to rent.</h2>
+        <div style="width: 80%; margin: 0 auto; height: 100%; display: flex; justify-content: space-between;">
+            <div>
+                <img src="{% static 'img/rentout.png' %}" alt="">
+            </div>
+            <div style="display: flex; align-items: center; margin:15px;">
+                <h2 style="line-height:50px;">It will not be difficult for you to rent a house with us. You put the following information and your house will be rented.</h2>
+            </div>
+        </div>
+        <h2 class="text-center">How to fill in.</h2>
+        <div style="width: 80%; margin: 0 auto; height: 100%; display: flex; justify-content: space-between;">
+            <div style="display: flex; align-items: center; margin:15px;">
+                <p style="font-size: 19px;">1. You enter your region.<br>
+                    2. You enter your district.<br>
+                    3. The price of the house you want to rent.<br>
+                    4. The number of rooms in the house you want to rent.<br>
+                    5. About the house you want to rent.<br>
+                    6. You post three pictures, the first is the main, the rest are about the rooms.<br></p>
+            </div>
+            <div>
+                <img src="{% static 'img/rent1.png' %}" alt="">
+            </div>
+        </div>
+    </section>
+<section class="qoyish container pt-5">
+    <h2 class="text-center">Renting Out.</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="" class="form-label">Region:</label>
+            <input type="text" Required name="region" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">District:</label>
+            <input type="text" Required name="district" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Price:</label>
+            <input type="number" Required name="cost" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Number of rooms:</label>
+            <input type="number" Required name="number_of_rooms" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">About Home:</label>
+            <textarea name="desc" class=" form-control"></textarea>
+        </div>
+         <div class="mb-3">
+            <label for="" class="form-label">Choose first image:</label>
+            <input type="file" Required name="image_1" class="form-control" style="border:none;">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Choose second image:</label>
+            <input type="file" Required name="image_2" class="form-control" style="border:none;">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Choose third image: </label>
+            <input type="file" Required name="image_3" class="form-control" style="border:none;">
+        </div>
+        <button type="submit" class="btn btn-primary " style="float:right">Save</button>
+    </form>
+</section>
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script><script  src="{% static 'js/script.js' %}"></script>    
+</body>
+</html>
+    
+{% endblock content %}
