@@ -1,61 +1,62 @@
-from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import CallbackContext
-from telegram.ext import CommandHandler, CallbackQueryHandler
-from telegram.ext.updater import Updater
-from telegram.ext.messagehandler import MessageHandler
-from telegram.ext.filters import Filters
-from translate import Translator
-token="5012516652:AAFrWxVocdjGRsLAI61Mpz1DeTl5Wf6rmJQ"
-def sellect_lang(update: Update, context: CallbackContext) -> None:
-	keyboard = [
-		[
-			InlineKeyboardButton("🇺🇿 O'zbek tili ➡️ 🇬🇧 Ingliz tili", callback_data="EN")
-		],
-		[
-			InlineKeyboardButton("🇺🇿 O'zbek tili ➡️ 🇷🇺 Rus tili", callback_data="RU"),
-		],
-		[
-			InlineKeyboardButton("🇬🇧 Ingliz tili ➡️ 🇺🇿 O'zbek tili", callback_data="en-uz")
-		],
-		[
-			InlineKeyboardButton("🇷🇺 Rus tili ➡️ 🇺🇿 O'zbek tili", callback_data="ru-uz")
-		],
-	]
-	reply_markup = InlineKeyboardMarkup(keyboard)
-	update.message.reply_text('Qaysi tildan qaysi tilga tarjima qilmoqchisiz?', reply_markup=reply_markup)
-lang = ""
-def button(update: Update, context:CallbackContext) -> None:
-	global lang
-	lang = update.callback_query.data.lower()
-	query = update.callback_query
-	query.answer()
-	if query.data == "ru-uz":
-		query.edit_message_text(text="🇷🇺 Rus tili ➡️ 🇺🇿 O'zbek tilini tanladingiz, har bir yuborgan so'zingizni Rus tilidan O'zbek tiligaga tarjima qilib beraman. So'z yuborishingiz mumkin.\nTilni o'zgartirish uchun '/sellect_lang' ni yuboring")
-	elif query.data == "en-uz":
-		query.edit_message_text(text="🇬🇧 Ingliz tili ➡️ 🇺🇿 O'zbek tilini tanladingiz, har bir yuborgan so'zingizni Ingliz tilidan O'zbek tiligaga tarjima qilib beraman. So'z yuborishingiz mumkin.\nTilni o'zgartirish uchun '/sellect_lang' ni yuboring")
-	elif query.data == "RU":	
-		query.edit_message_text(text="🇺🇿 O'zbek tili ➡️ 🇷🇺 Rus tilini tanladingiz, har bir yuborgan so'zingizni O'zbek tilidan Rus tiligaga tarjima qilib beraman. So'z yuborishingiz mumkin.\nTilni o'zgartirish uchun '/sellect_lang' ni yuboring")
-	elif query.data == "EN":	
-		query.edit_message_text(text="🇺🇿 O'zbek tili ➡️ 🇬🇧 Ingliz tilini tanladingiz, har bir yuborgan so'zingizni O'zbek tilidan Ingliz tiligaga tarjima qilib beraman. So'z yuborishingiz mumkin.\nTilni o'zgartirish uchun '/sellect_lang' ni yuboring")		
-def lang_translator(user_input):
-	if lang == "ru-uz":
-		translator = Translator(from_lang = "RU", to_lang = "UZ")
-	elif lang == "en-uz":
-		translator = Translator(from_lang = "EN", to_lang = "UZ")
-	else:
-		translator = Translator(from_lang = "UZ", to_lang = lang)
-	translation = translator.translate(user_input)
-	return translation
-def reply(update ,context):
-	user_input = update.message.text
-	update.message.reply_text(lang_translator(user_input) + "\n\n @Tarjimon_en_ru_bot")
-def main():
-	updater = Updater(token, use_context=True)
-	dp = updater.dispatcher
-	dp.add_handler(CommandHandler('start', sellect_lang))
-	dp.add_handler(CommandHandler('sellect_lang',sellect_lang))
-	dp.add_handler(CallbackQueryHandler(button))
-	dp.add_handler(MessageHandler(Filters.text, reply))
-	updater.start_polling()
-	updater.idle()
-main()
+import telebot
+from pytube import YouTube
+import glob
+import requests
+import os
+token = '5011490665:AAGC8IlabdbOupf_0NTG6mWySiQoN5PHGCo'
+
+bot = telebot.TeleBot(token)
+
+@bot.message_handler(commands=['start'])
+def start_message(message):
+    bot.send_message(message.chat.id, 'Salom! YouTube link yuborishingiz mumkin.')
+
+@bot.message_handler(func=lambda message: True)
+def start_message(message):
+    if 'youtu' in message.text:
+      global link
+      link = message.text
+      yt = YouTube(link).streams
+      ls=[]
+      for i in range(len(yt)):
+        sstr=str(yt[i])
+        try:
+          nextt=sstr[sstr.index('res="')+5:]
+          if (nextt[:4] not in ls) and str(nextt[:4])[-1]=='p':
+            ls.append(nextt[:4])
+        except:
+          pass
+      markup = telebot.types.InlineKeyboardMarkup()
+      for i in range(len(ls)):
+        markup.add(telebot.types.InlineKeyboardButton(text=ls[i], callback_data=ls[i]))
+
+      if yt.filter(type='audio'):
+          markup.add(telebot.types.InlineKeyboardButton(text='Audio', callback_data='audio'))
+      bot.send_message(message.chat.id, text=YouTube(link).title+':', reply_markup=markup)
+    else:
+      bot.send_message(message.chat.id, text="Iltimos YouTube link yuboring.")
+
+@bot.callback_query_handler(func=lambda call: True)
+def query_handler(call):
+    bot.answer_callback_query(callback_query_id=call.id, text='Tasdiqlandi!')
+    bot.send_message(call.message.chat.id, 'Kuting...')
+    bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id)
+    bot.delete_message(call.message.chat.id,call.message.message_id)
+    if call.data == 'audio':
+        YouTube(link).streams.filter(type='audio').first().download('videoo')
+        list_of_files = glob.glob('videoo//*')
+        mp3 = open(max(list_of_files, key=os.path.getctime), "rb")
+        try:
+            bot.send_audio(call.message.chat.id, mp3)
+        except:
+            bot.send_message(call.message.chat.id, 'Boshqa urinib ko`ring ')
+    else:
+        YouTube(link).streams.filter(res=call.data).first().download('videoo')
+        list_of_files = glob.glob('videoo//*')
+        video = open(max(list_of_files, key=os.path.getctime), "rb")
+        try:
+            bot.send_video(call.message.chat.id, video)
+        except:          
+            bot.send_message(call.message.chat.id, 'Boshqa urinib ko`ring ')
+    os.remove(min(glob.glob('videoo//*'), key=os.path.getctime))
+bot.infinity_polling()
